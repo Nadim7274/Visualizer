@@ -1,0 +1,7 @@
+{
+  "name": "AETHER — Audio Visualizer",
+  "description": "A premium interactive audio playground with real-time reactive visualizers, procedural ambient mixer, focus room, and creative experiences.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

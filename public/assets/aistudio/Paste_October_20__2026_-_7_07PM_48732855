@@ -1,0 +1,852 @@
+# PROJECT AETHER — Build a Premium Interactive Audio Visualizer Website
+
+You are an elite creative developer, senior frontend engineer, interactive experience designer, audio visualization specialist, and motion designer.
+
+Your task is to DESIGN AND BUILD a complete, functional, visually stunning, production-quality audio visualization website called **AETHER**.
+
+Do not merely describe the website, provide a plan, or generate a static mockup. Build the actual working application with functional interactions, real-time audio analysis, responsive layouts, and polished animations.
+
+Make creative decisions independently. Do not ask me to choose every design detail. Aim for a result that feels like a premium product designed by a team at Apple, Teenage Engineering, Nothing, and a cutting-edge interactive digital studio.
+
+The website should feel immersive, futuristic, smooth, atmospheric, and addictive to explore without becoming cluttered.
+
+---
+
+# 1. CORE CONCEPT
+
+AETHER is a personal music playground.
+
+Users can load audio files stored locally on their computers, play their music, and experience beautiful real-time visualizations that react to the actual audio signal.
+
+While listening, users can switch between visualizers, play with ambient environments, use a minimal productivity tool, draw, experiment with generative art, explore a little interactive toy, or simply relax and watch the music.
+
+The music must continue playing while users navigate between supported experiences inside the application.
+
+This should feel like a place people open when they want to listen to music, focus, relax, explore, or escape into their own digital atmosphere.
+
+The website must not require a paid API, a backend, a database, a login, or an external music streaming service for its core functionality.
+
+All uploaded music should be processed locally in the browser. Never upload a user's audio files to a server.
+
+# 2. VISUAL IDENTITY AND DESIGN LANGUAGE
+
+Create an original design system.
+
+Product name: AETHER
+
+Optional tagline: "A different way to feel sound."
+
+Visual direction:
+- Premium dark interface.
+- Deep near-black backgrounds with subtle navy undertones.
+- Soft luminous gradients.
+- Electric cyan, violet, indigo, and occasional warm amber accents.
+- Subtle glassmorphism, restrained transparency, and carefully controlled bloom.
+- Fine borders, delicate grid lines, and atmospheric background lighting.
+- Generous spacing and clean typography.
+- Sophisticated editorial layouts.
+- Smooth transitions with deliberate easing.
+- High-quality typography using an appropriate modern sans-serif font.
+- Small uppercase labels with generous letter spacing.
+- Beautifully designed controls rather than generic default browser buttons.
+
+Avoid:
+- Generic AI-generated dashboard layouts.
+- Excessive glass cards.
+- Rainbow gradients everywhere.
+- Huge empty sections.
+- Constant flashing.
+- Unnecessary interface elements.
+- Emoji-heavy navigation.
+- Overused glowing borders.
+- Fake buttons that do nothing.
+- Unnecessary loading animations.
+- A design that looks like a standard admin template.
+
+The interface should be minimal when the music is playing and reveal additional functionality only when useful.
+
+Create a coherent visual system that remains consistent across every page and interactive mode.
+
+# 3. APPLICATION ARCHITECTURE
+
+Build a single-page application with a persistent audio engine and client-side navigation.
+
+Recommended stack:
+- React.
+- TypeScript.
+- Vite if available in the environment.
+- Web Audio API for real-time audio analysis.
+- HTML Canvas 2D and/or WebGL for rendering visualizations.
+- CSS animations and transitions for interface motion.
+- Local browser storage for preferences and lightweight saved settings.
+
+Use installed and supported libraries where appropriate. Do not introduce unnecessary dependencies.
+
+If a preferred library is unavailable, implement the required functionality using native browser technologies.
+
+Organize the application into reusable components. Keep the audio engine separate from the visualization renderers and UI.
+
+Suggested components:
+- App
+- AudioEngine
+- AudioPlayer
+- TrackLibrary
+- VisualizationStage
+- VisualizationSelector
+- ExperienceDrawer
+- AmbientMixer
+- FocusMode
+- MiniGames
+- SettingsPanel
+
+These are architectural suggestions, not restrictions.
+
+# 4. THE AUDIO ENGINE — THE MOST IMPORTANT PART
+
+Implement a real working audio engine using the Web Audio API.
+
+Users must be able to:
+
+1. Upload one or multiple local audio files.
+2. Drag and drop audio files into the application.
+3. Add audio using a clearly visible file-selection button.
+4. Play and pause music.
+5. Skip to the previous or next track.
+6. Seek to any position using a timeline.
+7. Adjust volume.
+8. Mute and unmute.
+9. Enable shuffle.
+10. Enable repeat-one and repeat-all modes.
+11. View the current track title and artist when available.
+12. View the track duration and current playback time.
+13. See album artwork when embedded artwork can be extracted reliably.
+14. Build a queue or playlist from uploaded tracks.
+15. Remove tracks from the queue.
+16. See a clear empty state before loading music.
+
+Support common browser-playable audio formats, including MP3, WAV, OGG, AAC/M4A where supported by the browser, and FLAC where supported.
+
+Extract available metadata from local files when practical. If metadata is unavailable, use a sensible fallback title derived from the filename.
+
+Never pretend that metadata exists when it does not.
+
+Use object URLs or another appropriate browser-local mechanism to play files. Revoke object URLs when they are no longer needed.
+
+Handle unsupported files, corrupted files, empty playlists, playback errors, and interrupted playback gracefully.
+
+Do not attempt to bypass browser autoplay restrictions. Start playback in response to a user gesture when necessary.
+
+## REAL-TIME ANALYSIS
+
+Connect the playing audio to an AnalyserNode.
+
+Use actual frequency-domain and time-domain data to drive the visualizations.
+
+Analyze useful information such as:
+- Frequency spectrum.
+- Low-frequency energy.
+- Mid-frequency energy.
+- High-frequency energy.
+- Waveform amplitude.
+- Overall signal energy.
+- Transient changes in the signal.
+- Smoothed audio-reactive intensity.
+
+Use sensible smoothing and interpolation to prevent jittery visuals.
+
+Make bass-heavy sections produce convincing low-frequency movement, while higher-frequency content drives finer visual details.
+
+Do not generate random movement and label it as audio-reactive.
+
+The visuals must respond to the real audio currently playing.
+
+If audio analysis becomes unavailable or the browser suspends the audio context, handle recovery cleanly.
+
+IMPORTANT: Prevent audio duplication, feedback loops, and unnecessary AudioContext creation. Ensure the master playback volume works correctly and visualizations do not accidentally route audio through multiple output paths.
+
+# 5. THE MAIN VISUALIZER EXPERIENCE
+
+The first screen should immediately communicate the quality of the product.
+
+Create a large, immersive visualization stage that occupies most of the viewport.
+
+When the user loads music, the visualization should become the visual centerpiece.
+
+When no music is loaded, display an elegant animated idle scene with a clear invitation to add music.
+
+The main layout should contain:
+
+TOP BAR:
+- AETHER wordmark.
+- A small navigation system.
+- A discreet sound status indicator.
+- Settings access.
+- A visualizer fullscreen button.
+
+MAIN STAGE:
+- Large canvas-based visualization.
+- Current track information integrated elegantly.
+- Subtle background atmosphere.
+- Optional minimal visualization labels.
+- An unobtrusive control for changing the visualization.
+
+BOTTOM PLAYER:
+- Track artwork or a stylized placeholder.
+- Track title and metadata.
+- Playback controls.
+- Progress timeline.
+- Current time and total duration.
+- Volume control.
+- Queue access.
+
+Use a refined bottom player that remains available while navigating between internal experiences.
+
+On small screens, redesign the controls instead of simply shrinking the desktop layout.
+
+# 6. CREATE AT LEAST 12 DISTINCT VISUALIZATION MODES
+
+Every visualization must be implemented as a genuinely different rendering style.
+
+Do not create twelve buttons that merely change colors on the same animation.
+
+Use real audio data, custom drawing logic, and distinct visual behavior.
+
+## Mode 01 — AURORA
+
+Flowing luminous ribbons and atmospheric clouds.
+
+- Smooth aurora-like color transitions.
+- Flowing curved ribbons.
+- Bass-driven expansion.
+- Fine particles responding to higher frequencies.
+- A cinematic, spacious composition.
+
+## Mode 02 — OSCILLOSCOPE
+
+A precise, beautiful waveform instrument.
+
+- Real-time waveform rendering.
+- Multiple overlapping traces.
+- Thin luminous lines.
+- Adjustable line thickness.
+- Optional stereo waveform mode when appropriate.
+
+## Mode 03 — SPECTRUM
+
+A premium spectrum analyzer.
+
+- Responsive frequency bars.
+- Smooth peak decay.
+- Logarithmic frequency distribution.
+- Gradient intensity.
+- Optional mirrored and circular arrangements.
+
+## Mode 04 — COSMOS
+
+A generative star field.
+
+- Deep space atmosphere.
+- Particle movement and depth.
+- Bass pulses that create a sense of expansion.
+- High frequencies producing small sparks.
+- Subtle parallax and depth.
+
+## Mode 05 — LIQUID
+
+An abstract fluid-inspired visual.
+
+- Flowing color fields.
+- Organic shapes.
+- Audio-driven distortion.
+- Smooth transitions between color regions.
+
+Use a real shader or a practical canvas-based approximation. Do not claim to implement a full fluid simulation if the implementation is only a simple gradient.
+
+## Mode 06 — NEBULA
+
+A colorful cosmic cloud.
+
+- Layered particles.
+- Soft luminous clouds.
+- Frequency-driven expansion.
+- Gentle orbital motion.
+- Beautiful depth without excessive visual noise.
+
+## Mode 07 — GEOMETRY
+
+A precise generative geometry system.
+
+- Rotating geometric structures.
+- Recursive patterns.
+- Bass-driven scale changes.
+- Treble-driven fine detail.
+- Symmetrical and asymmetrical compositions.
+
+## Mode 08 — TUNNEL
+
+An infinite perspective tunnel.
+
+- Depth-based geometry.
+- Responsive forward movement.
+- Beat-sensitive pulses.
+- Smooth motion that does not cause nausea.
+- Optional reduced-motion mode.
+
+## Mode 09 — PARTICLES
+
+A large interactive particle field.
+
+- Hundreds or thousands of particles depending on device performance.
+- Audio-responsive particle motion.
+- Mouse or touch interaction.
+- Attractive trails.
+- Stable frame rate.
+
+## Mode 10 — MONOLITH
+
+A minimal, architectural audio sculpture.
+
+- Dark background.
+- A central sculptural form.
+- Precisely controlled lighting.
+- Frequency-driven deformation.
+- Premium monochrome or restrained accent colors.
+
+## Mode 11 — BLOOM
+
+A soft, meditative visualization.
+
+- Petal-like shapes.
+- Organic radial expansion.
+- Slow motion during quiet passages.
+- Elegant color transitions.
+- Suitable for relaxation.
+
+## Mode 12 — RETRO TERMINAL
+
+A tasteful retro-futuristic visualization.
+
+- Dark phosphor display.
+- Oscillating waveform.
+- Technical annotations.
+- Frequency readouts.
+- Scanline effects used sparingly.
+- An original visual style rather than a copied existing product.
+
+## VISUALIZER QUALITY REQUIREMENTS
+
+Each mode must:
+- Use the shared audio analysis engine.
+- Have a unique rendering implementation.
+- Respond continuously to playback.
+- Handle pause, resume, and track changes.
+- Resize correctly.
+- Clean up animation loops when unmounted.
+- Support fullscreen mode.
+- Provide sensible performance fallbacks.
+
+Allow users to switch between modes without stopping the music.
+
+Add a smooth transition between visualizers where practical. Avoid destroying and recreating the entire application when switching modes.
+
+Include a favorites feature for visualization presets.
+
+Allow users to adjust a small collection of meaningful parameters, such as intensity, sensitivity, color palette, particle density, and motion speed.
+
+Make preset changes visually satisfying.
+
+# 7. COLOR PALETTES AND VISUAL PRESETS
+
+Provide several coherent preset themes:
+
+- Midnight: black, graphite, cool silver.
+- Aurora: cyan, mint, deep teal.
+- Ultraviolet: purple, indigo, electric blue.
+- Solar: amber, gold, burnt orange.
+- Arctic: icy blue, white, pale cyan.
+- Monochrome: white, grey, black.
+- Dreamscape: muted violet, pink, blue.
+- Toxic: restrained acid green against black.
+
+Each visualization should support compatible palettes without compromising its identity.
+
+Provide a randomize button that selects a compatible visualization and palette.
+
+The randomize action must not interrupt playback.
+
+# 8. THE EXPERIENCE DRAWER — THINGS TO DO WHILE LISTENING
+
+AETHER must offer optional experiences that coexist with music playback.
+
+Create an elegant side panel, overlay, or expandable experience drawer.
+
+These activities should be accessible without navigating away from the persistent audio player.
+
+Prioritize the following experiences.
+
+## A. FOCUS ROOM
+
+A distraction-free productivity space.
+
+Features:
+- Pomodoro timer.
+- Custom focus and break durations.
+- Start, pause, and reset.
+- A small task or intention field.
+- A simple completion indicator.
+- A calm ambient visual background.
+- An optional session history stored locally.
+
+The timer must function correctly and must not reset when the visualization changes.
+
+Keep this feature lightweight and useful.
+
+## B. AMBIENT MIXER
+
+A separate layer for mixing optional background ambience with music.
+
+Include locally generated or procedurally generated sounds such as:
+- Rain.
+- Wind.
+- Fireplace crackle.
+- Gentle ocean ambience.
+- Brown noise.
+- Pink noise.
+
+Generate these sounds using Web Audio API synthesis or noise buffers where feasible. Do not require external audio files or paid sound APIs.
+
+Each sound must have its own volume control.
+
+Include play/pause, master ambience volume, and individual mute controls.
+
+The ambience must be mixed separately from the music so users can independently adjust both.
+
+Use appropriate gain controls and clean up generated audio resources.
+
+Never make background ambience unexpectedly loud when enabled.
+
+## C. PARTICLE PLAYGROUND
+
+An interactive canvas where users can interact with a generative particle field while listening.
+
+- Move the cursor to influence particles.
+- Click to create a small burst.
+- Allow particle color customization.
+- Offer a reset button.
+- Keep the interaction smooth and lightweight.
+
+The music should continue uninterrupted.
+
+## D. ZEN GARDEN
+
+A calming interactive environment.
+
+- A minimal digital garden.
+- Gentle animated plants or abstract organic forms.
+- Click or tap to add a decorative element.
+- A few atmosphere presets.
+- Soft transitions.
+- Audio-responsive environmental movement.
+
+Do not require complex 3D assets to make this enjoyable.
+
+## E. DOODLE CANVAS
+
+A simple drawing surface.
+
+- Freehand drawing.
+- Adjustable brush size.
+- Color selection.
+- Eraser.
+- Clear canvas.
+- Save drawing as a PNG.
+
+The user should be able to draw while listening to music.
+
+Keep this experience functional rather than decorative.
+
+## F. MEMORY GAME
+
+A tiny optional concentration game.
+
+- Simple card matching.
+- Keyboard and mouse support.
+- Restart functionality.
+- Move counter.
+- Completion state.
+
+The game must never pause or restart the music when the user interacts with it.
+
+## G. BREATHING OR MEDITATION MODE
+
+A calm, optional breathing guide.
+
+- Expand and contract an elegant animated shape.
+- Adjustable breathing duration.
+- Start and stop controls.
+- Gentle visual cues.
+- No sudden flashes or aggressive effects.
+
+Clearly distinguish the breathing animation from the actual audio visualization.
+
+## H. AMBIENT CLOCK
+
+A beautiful clock and minimal desk mode.
+
+- Large local time display.
+- Optional date.
+- Minimal typography.
+- A subtle background animation.
+- A distraction-free full-screen presentation.
+
+The time must be accurate to the device clock.
+
+## EXPERIENCE ARCHITECTURE
+
+Do not display every activity as a giant card on the main screen.
+
+Use a polished, compact launcher with attractive icons, short descriptions, and carefully designed hover states.
+
+Users must be able to open and close activities quickly.
+
+The player must remain persistent and functional throughout.
+
+For mobile devices, use an appropriate bottom sheet or dedicated compact navigation.
+
+# 9. TRACK LIBRARY AND PLAYLIST EXPERIENCE
+
+Build a local music library panel.
+
+Features:
+- Uploaded tracks list.
+- Search by filename or extracted metadata.
+- Sort by title, duration, or recently added.
+- Display track duration.
+- Highlight the currently playing track.
+- Remove individual tracks.
+- Clear the library with confirmation.
+- Create and rename playlists if practical.
+- Save playlist metadata and settings locally where feasible.
+
+Important: Local audio files and their object URLs do not persist reliably across browser sessions.
+
+Do not promise that uploaded audio will remain playable after a refresh unless the implementation explicitly supports persistent file storage, such as IndexedDB, and the user has granted the required browser permissions.
+
+Prefer a straightforward, dependable implementation over a complicated system that breaks.
+
+# 10. MUSIC-RESPONSIVE BACKGROUND ATMOSPHERE
+
+The entire interface should subtly respond to the music.
+
+Examples:
+- Background glow changes with bass intensity.
+- Small decorative particles react to high-frequency activity.
+- Album artwork can influence the accent color when available.
+- Player controls receive subtle feedback when activated.
+- The active visualization smoothly responds to frequency changes.
+
+These effects should be subtle.
+
+Do not animate every interface element at the same time.
+
+Keep interface readability more important than decorative effects.
+
+Add a master toggle to disable global audio-reactive interface effects.
+
+# 11. INTERACTION AND MOTION DESIGN
+
+Motion is essential to the experience.
+
+Use:
+- Smooth crossfades between modes.
+- Carefully eased panel transitions.
+- Responsive button feedback.
+- Subtle scale and opacity changes.
+- Animated loading and empty states.
+- Smooth player timeline updates.
+- Lightweight ambient movement.
+- Refined hover and focus states.
+
+Motion must communicate hierarchy and state, not merely decorate the page.
+
+Avoid:
+- Excessive bounce.
+- Abrupt transitions.
+- Continuous high-speed spinning.
+- Unnecessary page reloads.
+- Animation loops that remain active when no longer needed.
+- Expensive blur filters over large moving surfaces.
+- Animation that makes the interface difficult to use.
+
+Respect prefers-reduced-motion.
+
+Support keyboard navigation and visible focus indicators.
+
+# 12. RESPONSIVE DESIGN
+
+The website must work on:
+- Desktop computers.
+- Laptops.
+- Tablets.
+- Mobile phones.
+
+Desktop:
+- Large immersive visualization.
+- Full player controls.
+- Accessible side panels.
+- Optional keyboard shortcuts.
+
+Tablet:
+- Flexible visualization dimensions.
+- Compact navigation.
+- Touch-friendly controls.
+
+Mobile:
+- Full-width visualization.
+- Compact playback controls.
+- Readable track metadata.
+- Touch-friendly buttons.
+- A compact queue panel.
+- Appropriate handling of device orientation.
+- No accidental horizontal overflow.
+
+Do not sacrifice core functionality on mobile.
+
+# 13. FULLSCREEN AND PRESENTATION MODE
+
+Provide a fullscreen visualization mode.
+
+When enabled:
+- Expand the visualization to fill the available display.
+- Hide unnecessary interface elements.
+- Keep playback controls accessible through a minimal overlay.
+- Allow users to exit fullscreen easily.
+- Use the browser Fullscreen API when available and permitted.
+
+Also provide a clean presentation mode for people who want to leave music playing on a monitor.
+
+# 14. AUDIO QUALITY AND PERFORMANCE
+
+Performance is part of the design.
+
+Use requestAnimationFrame appropriately.
+
+Avoid repeated expensive allocations in render loops.
+
+Avoid React re-renders on every audio-analysis frame. Keep high-frequency visualization data in an efficient rendering path outside normal React state updates.
+
+Scale canvas resolution sensibly using devicePixelRatio and a practical upper bound.
+
+Use appropriate throttling, interpolation, and cleanup.
+
+Use visibilitychange handling to reduce unnecessary background work when appropriate, without unexpectedly stopping music.
+
+Handle resize and device orientation changes.
+
+Provide reduced-quality settings for weaker devices.
+
+If WebGL is unavailable, use a Canvas 2D fallback for applicable visualization modes.
+
+The application should remain responsive while audio plays and users interact with other features.
+
+# 15. ACCESSIBILITY AND USABILITY
+
+Implement:
+- Semantic buttons and labels.
+- Keyboard-accessible controls.
+- Visible focus indicators.
+- Appropriate color contrast.
+- Accessible names for icon-only buttons.
+- Clear empty and error states.
+- Reduced-motion support.
+- Helpful tooltips.
+- Touch-friendly hit areas.
+- Sensible defaults.
+
+Do not rely exclusively on color to communicate playback state.
+
+Do not use flashing effects that may create accessibility risks.
+
+# 16. SETTINGS PANEL
+
+Include a settings panel with:
+- Visualization sensitivity.
+- Global motion intensity.
+- Color palette.
+- Audio-reactive UI toggle.
+- Reduced-motion option.
+- Performance quality.
+- Player volume.
+- Ambient audio controls.
+- Keyboard shortcuts reference.
+- Reset settings action.
+
+Persist appropriate preferences locally.
+
+Do not store uploaded audio file contents in localStorage.
+
+Settings should update the application immediately.
+
+# 17. OPTIONAL KEYBOARD SHORTCUTS
+
+Support a useful set of shortcuts:
+- Space: play/pause when focus is not inside a text-entry control.
+- Left and right arrows: seek backward or forward when appropriate.
+- Up and down arrows: adjust volume only when this will not interfere with another focused control.
+- N: next track.
+- P: previous track.
+- F: toggle visualization fullscreen.
+- Escape: close an overlay or exit fullscreen when appropriate.
+
+Avoid capturing shortcuts when the user is typing into an input or text area.
+
+Show the available shortcuts in the interface.
+
+# 18. VISUAL AND TECHNICAL POLISH
+
+Use the following quality standards:
+
+- No nonfunctional buttons.
+- No fake audio-reactivity.
+- No placeholder charts.
+- No generic static spectrum presented as the entire experience.
+- No broken imports.
+- No missing assets that prevent the app from loading.
+- No unnecessary network dependencies.
+- No exposed API keys.
+- No unhandled playback errors.
+- No persistent console errors.
+- No duplicated animation loops.
+- No audio continuing unexpectedly after the user stops playback.
+- No navigation that destroys the audio engine.
+- No controls that look interactive but are inert.
+
+Generate decorative visual elements procedurally whenever practical.
+
+Do not depend on externally hosted images for the core experience.
+
+If album artwork is unavailable, create a beautiful procedural placeholder rather than a broken image.
+
+Use clean code and maintainable component boundaries.
+
+# 19. IMPLEMENTATION PRIORITIES
+
+Build the project in this order.
+
+PHASE 1 — FUNCTIONAL FOUNDATION
+- Create the project structure.
+- Implement local audio import.
+- Implement persistent playback.
+- Implement the audio-analysis engine.
+- Build the main responsive layout.
+- Create at least three fully working visualization modes.
+
+PHASE 2 — VISUALIZATION LIBRARY
+- Implement all twelve distinct modes.
+- Add palettes and presets.
+- Add visualization settings.
+- Add fullscreen.
+
+PHASE 3 — LISTENING EXPERIENCES
+- Implement the track library and queue.
+- Add the ambient mixer.
+- Add the focus room.
+- Add the particle playground.
+- Add the doodle canvas.
+- Add the memory game.
+- Add the Zen Garden and breathing mode.
+- Add the ambient clock.
+
+PHASE 4 — POLISH
+- Refine transitions and typography.
+- Add keyboard accessibility.
+- Optimize rendering.
+- Handle edge cases.
+- Test on different screen sizes.
+- Verify audio persistence across internal navigation.
+- Remove unnecessary dependencies and debug code.
+
+Do not stop after creating the shell of Phase 1 if the environment can support the complete implementation.
+
+If the environment has practical output or execution limits, prioritize a complete, functional core over numerous unfinished features.
+
+# 20. ACCEPTANCE TESTS
+
+Before declaring the project complete, verify the following:
+
+TEST 1:
+A user can upload a local MP3 file and play it.
+
+TEST 2:
+The progress timeline updates accurately and seeking works.
+
+TEST 3:
+The actual audio signal drives the active visualization.
+
+TEST 4:
+Switching visualizers does not stop or restart the music.
+
+TEST 5:
+Changing internal pages or opening an experience does not reset playback.
+
+TEST 6:
+The previous and next track controls work correctly.
+
+TEST 7:
+Volume, mute, shuffle, and repeat behave as expected.
+
+TEST 8:
+The ambient mixer works independently of the main music volume.
+
+TEST 9:
+The focus timer continues running while the user changes visualization modes.
+
+TEST 10:
+The drawing canvas can export a PNG.
+
+TEST 11:
+The memory game can be completed and restarted.
+
+TEST 12:
+Fullscreen can be entered and exited.
+
+TEST 13:
+The interface works on desktop and mobile without horizontal overflow.
+
+TEST 14:
+No uploaded audio is transmitted to an external server.
+
+TEST 15:
+The app handles empty playlists, unsupported files, and playback failures gracefully.
+
+TEST 16:
+Switching experiences does not create duplicate audio or animation loops.
+
+TEST 17:
+Preferences persist where expected, and the application does not falsely claim local audio files persist when they do not.
+
+# 21. FINAL CREATIVE DIRECTION
+
+The final experience should feel like a premium, living digital instrument.
+
+It should be beautiful enough for someone to open it just to watch the visuals, useful enough to keep open while studying, and playful enough to explore for an hour.
+
+The most important things are:
+
+1. Exceptional visual design.
+2. Accurate real-time audio synchronization.
+3. Smooth, uninterrupted playback.
+4. Multiple genuinely distinct visualizers.
+5. Useful optional activities.
+6. Reliable performance.
+7. A cohesive, immersive experience.
+
+Use your own design judgment to make the finished website distinctive.
+
+Do not stop at a written explanation.
+
+Start implementing the actual application now. Create the necessary files, build the components, connect all the interactions, and verify the core experience works.
+
+If you can run the project, launch it and fix any build errors before finishing.
+
+Deliver the working application rather than merely explaining how I could build it.
